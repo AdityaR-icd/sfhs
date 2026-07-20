@@ -1,0 +1,85 @@
+# ── OS / editor junk ───────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+node_modules/
+
+# ── Secrets & config ───────────────────────────
+wp-config.php
+wp-config-*.php
+!wp-config-sample.php
+
+# ── Logs ───────────────────────────────────────
+error_log
+error_log*
+*.log
+wp-content/debug.log
+
+# ── Backups / archives (incl. the 5GB zip) ─────
+*.zip
+*.gz
+*.tar
+*.sql
+wp-content/aiowps_backups/
+wp-content/aiowps_backups.zip
+wp-content/updraft/
+wp-content/ai1wm-backups/
+
+# ── Caches / temp ──────────────────────────────
+wp-content/cache/
+wp-content/w3tc-config/
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+
+# ── Uploads (media library — not versioned) ────
+wp-content/uploads/
+
+# ── Media assets (keep only UI code, not binaries) ─
+# Raster images
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.webp
+*.tiff
+*.ico
+# Video
+*.mp4
+*.webm
+*.mov
+*.avi
+*.m4v
+*.mkv
+# Audio
+*.mp3
+*.wav
+*.ogg
+*.aac
+*.flac
+# NOTE: .svg (vector UI icons) and web fonts (.woff/.woff2/.ttf/.eot)
+# are kept — they're small, text/UI assets. Remove below to also ignore them.
+# *.svg
+# *.woff
+# *.woff2
+# *.ttf
+# *.eot
+
+# ── Plugins (reinstallable — not versioned) ────
+wp-content/plugins/
+
+# ── WordPress core (re-downloadable) ───────────
+/wp-admin/
+/wp-includes/
+/wp-*.php
+!/wp-config-sample.php
+/xmlrpc.php
+/index.php
+/license.txt
+/readme.html
+/php-info.php
+/php-version.php
+/google*.html
+/robots.txt

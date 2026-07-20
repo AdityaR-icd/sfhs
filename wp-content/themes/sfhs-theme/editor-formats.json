@@ -1,0 +1,8 @@
+[
+    {
+        "title": "Text Color",
+        "selector": "span",
+        "classes": "redTextColor",
+        "type": "item"
+    }
+]
