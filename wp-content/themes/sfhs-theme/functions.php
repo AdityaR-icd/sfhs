@@ -129,7 +129,7 @@ function school_website_scripts() {
 	wp_enqueue_style( 'slick-theme-css', get_stylesheet_directory_uri() . '/assets/css/slick/slick-theme.css' );
 	wp_enqueue_style( 'video-js', get_stylesheet_directory_uri() . '/assets/css/video-js.css' );
 	wp_enqueue_style( 'waves-js', get_stylesheet_directory_uri() . '/assets/css/waves.min.css' );	
-	wp_enqueue_style( 'school-website-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'school-website-style', get_stylesheet_uri(), array(), filemtime( get_stylesheet_directory() . '/style.css' ) );
 
 
 
@@ -175,7 +175,7 @@ function school_website_scripts() {
 	// Custom Cookie Script
 	// wp_enqueue_script('ripple-js' , get_stylesheet_directory_uri() . '/assets/js/ripple.js' , array()); 
 	// Custom Script
-	wp_enqueue_script('custom-script' , get_stylesheet_directory_uri() . '/assets/js/script.js' , array());
+	wp_enqueue_script('custom-script' , get_stylesheet_directory_uri() . '/assets/js/script.js' , array(), filemtime( get_stylesheet_directory() . '/assets/js/script.js' ));
 
 
 

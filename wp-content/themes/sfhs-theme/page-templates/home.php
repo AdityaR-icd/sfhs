@@ -26,8 +26,9 @@ scrollTopValue = 400;
                         <div class="col-md-6 first-card">
                             <div class="first-col card">
                                 <div class="image-wrapper ">
-                                    <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image1.png" alt="" class=" hide-mobile" >
-                                        <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image1mobile.png"
+                                    <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image1.png"
+                                        alt="" class=" hide-mobile">
+                                    <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image1mobile.png"
                                         class=" hide-desktop" alt="">
                                 </div>
                                 <div class='card-text'>SFHS, CHANDIGARH</div>
@@ -40,24 +41,24 @@ scrollTopValue = 400;
                         </div>
                     </a>
                     <a href='admission-sfhs-new-chandigarh'>
-                   <div class="col-md-6 secCard">
-                        <div class="sec-col card">
-                            <div class="image-wrapper ">
-                                <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image2.png"
-                                class=" hide-mobile" alt="">
+                        <div class="col-md-6 secCard">
+                            <div class="sec-col card">
+                                <div class="image-wrapper ">
+                                    <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image2.png"
+                                        class=" hide-mobile" alt="">
                                     <img src="https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image2mobile.png"
-                                    class="hide-desktop" alt="">
-                                    
-                            </div>
-                            <div class='card-text'>SFHS, new CHANDIGARH</div>
+                                        class="hide-desktop" alt="">
 
+                                </div>
+                                <div class='card-text'>SFHS, new CHANDIGARH</div>
+
+                            </div>
+                            <div class='sec_Seccol text-card green'>
+                                <p class='para'>Play Class to <u>5</u></p>
+                                <div class='herobtn greenbtn '>admissions ></div>
+                            </div>
                         </div>
-                        <div class='sec_Seccol text-card green'>
-                            <p class='para'>Play Class to <u>5</u></p>
-                            <div class='herobtn greenbtn '>admissions ></div>
-                        </div>
-                    </div>
-                   </a>
+                    </a>
                 </div>
 
             </div>
@@ -159,7 +160,7 @@ scrollTopValue = 400;
         <!--- end of background image and text --->
 
 
-        <div class="fullPage__section">
+        <!-- <div class="fullPage__section">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -182,7 +183,7 @@ scrollTopValue = 400;
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -192,61 +193,149 @@ scrollTopValue = 400;
 
 
 
-            <?php 
+            <div class="homeTestimonials__carousel">
+                <?php
 			$testimonials_loop = CFS()->get( 'testimonials_loop' ,$post_ID );
 			foreach ( $testimonials_loop as $row ):
 		?>
-            <div class="fullPage__section">
-                <div class="container  homeCarousel" id="scrollTo">
-                    <div class="row">
-                        <div class="col-md-6 ">
-                            <h2 class="head-nav hero__header"><?php echo $row['testimonial_heading']; ?></h2>
-                            <div class="anchorLink">
-                                <?php echo $row['testimonial_description']; ?>
+                <div class="fullPage__section">
+                    <div class="container  homeCarousel" id="scrollTo">
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <h2 class="head-nav hero__header"><?php echo $row['testimonial_heading']; ?></h2>
+                                <div class="anchorLink">
+                                    <?php echo $row['testimonial_description']; ?>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-5  col-md-offset-1">
-                            <div class="achiever_section-formatting ">
-                                <div class="pos_relative">
-                                    <div class="play-btn first homeTestimonials">
-                                        <div class="playIcon__bottomLeft customPlay inView">
-                                            <video class="video-js static_video" preload="none"
-                                                data-setup='{ "controls": false, "autoplay": false  }'
-                                                poster="<?php echo $row['testimonial_thumb']; ?>" playsinline>
-                                                <source src="<?php echo $row['testimonial_video']; ?>" type="video/mp4">
-                                            </video>
-                                            <span
-                                                class="homeVideo__caption"><?php echo $row['testimonial_video_subtitle']; ?></span>
+                            <div class="col-md-5  col-md-offset-1">
+                                <div class="achiever_section-formatting ">
+                                    <div class="pos_relative">
+                                        <div class="play-btn first homeTestimonials">
+                                            <div class="playIcon__bottomLeft customPlay inView">
+                                                <video class="video-js static_video" preload="none"
+                                                    data-setup='{ "controls": false, "autoplay": false  }'
+                                                    poster="<?php echo $row['testimonial_thumb']; ?>" playsinline>
+                                                    <source src="<?php echo $row['testimonial_video']; ?>"
+                                                        type="video/mp4">
+                                                </video>
+                                                <span
+                                                    class="homeVideo__caption"><?php echo $row['testimonial_video_subtitle']; ?></span>
 
-                                            <button aria-label="button" role="button" class="o-play-btn">
-                                                <i class="o-play-btn__icon">
-                                                    <div class="o-play-btn__mask"></div>
-                                                </i>
-                                            </button>
-                                            <div class="homeVideo__info">
-                                                <span class="homeCarousel__name"><?php echo $row['name']; ?></span>
-                                                <span class="homeCarousel__class"><?php echo $row['about']; ?></span>
+                                                <button aria-label="button" role="button" class="o-play-btn">
+                                                    <i class="o-play-btn__icon">
+                                                        <div class="o-play-btn__mask"></div>
+                                                    </i>
+                                                </button>
+                                                <div class="homeVideo__info">
+                                                    <span class="homeCarousel__name"><?php echo $row['name']; ?></span>
+                                                    <span
+                                                        class="homeCarousel__class"><?php echo $row['about']; ?></span>
+                                                </div>
                                             </div>
-                                        </div>
 
+
+                                        </div>
 
                                     </div>
 
                                 </div>
-
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
-            <?php 
+                <?php
 			endforeach;
 		?>
+            </div><!-- /.homeTestimonials__carousel -->
 
 
-            <section class="mB__120 home-ibdp">
+            <div class="fullPage__section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="head-nav hero__header">Our Mission</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <p><strong>Education for Strawberry Fields High School</strong> is a dynamic process which,
+                                through reflective and contextual pedagogy, takes along students, educators and parents
+                                on
+                                an inviting journey that explores the worlds of intellectual, emotional and spiritual
+                                learning.</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>Our immersive approach nurtures diverse interests, helps children discover their
+                                potential
+                                and apply their talents, to connect better to the world around them. It inspires and
+                                equips
+                                them to become lifelong learners who are responsible and compassionate world citizens,
+                                committed to ensuring equal rights and opportunities for all.</p>
+                        </div>
+                    </div>
+                    <div class="row mt-70">
+                        <div class="col-md-6 ">
+                            <p class="red-title">We put every child’s safety first. We follow multi-tier safeguarding
+                                procedures.
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p><strong class="my-10">Child Protection Statement</strong>
+
+                                Our immersive approach nurtures diverse interests, helps children discover their
+                                potential and apply their talents, to connect better to the world around them. It
+                                inspires and equips them to become lifelong learners who are responsible and
+                                compassionate world citizens, committed to ensuring equal rights and opportunities for
+                                all.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fullPage__section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="head-nav hero__header">Academic
+                                <br />Programmes
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <p>At Strawberry Fields, we
+                                recognise that every learner’s journey is <strong>unique.</strong> To nurture this
+                                individuality, we
+                                offer a diverse and distinguished suite of Academic Programmes <strong>— IB Primary
+                                    Years
+                                    Programme (IB PYP), The Cambridge Lower Secondary, ICSE, ISC, and the IB Diploma
+                                    Programme (IB DP).</strong>
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>This continuum allows students to follow pathways that align with their strengths,
+                                interests, and future ambitions, while ensuring academic rigour and holistic growth at
+                                every stage.
+                                <br />
+                                <br />
+                                Our academic pathways emphasise conceptual understanding, real-world application, global
+                                perspectives, and strong foundational learning, creating <strong>seamless transitions
+                                    from early
+                                    years to pre-university education.</strong>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <section class="mB__120 home-ibdp">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -256,7 +345,7 @@ scrollTopValue = 400;
                         </div>
                     </div>
                 </div>
-                <!-- Video Section -->
+                
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 no-padding">
@@ -285,8 +374,43 @@ scrollTopValue = 400;
                             More</a>
                     </div>
                 </div>
-                <!-- Video Section End-->
+                
+            </section> -->
+
+            <!-- Academic Section: red-block carousel (CFS loop: academic_section) -->
+            <section class=" footer__blockRed slickDots__alignBottom mobile__mB-120 home__academicSection">
+                <div class="container no-padding">
+                    <div class="pos_relative academic__imgSlide redBlockCarousel">
+                        <?php
+                            $fullwidth_carousel = CFS()->get('academic_section', $post_ID);
+                            foreach ((array) $fullwidth_carousel as $row):
+                        ?>
+                        <div><img data-lazy="<?php echo $row['image']; ?>" class="img-responsive" alt=""></div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="container way__footer no-padding">
+                    <div class="way__footer-blockRed educators__wayBlock home__academicProgrammes">
+                        <div class="way__footer-spacing">
+                            <div class="row academic__textSlide">
+                                <?php foreach ((array) $fullwidth_carousel as $row): ?>
+                                <div>
+                                    <div class="col-md-4">
+                                        <span
+                                            class="video__section-text font--white"><?php echo $row['carousel_heading']; ?></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="redTextBlock"><?php echo $row['carousel_text']; ?></div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
+            <!-- End Section 2 -->
 
             <div class="tickerPadding">
                 <div class="container ">

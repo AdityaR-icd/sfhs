@@ -99,6 +99,26 @@ hr {
  * 1. Correct the inheritance and scaling of font size in all browsers.
  * 2. Correct the odd `em` font sizing in all browsers.
  */
+
+.red-title {
+  color: #D0021B;
+font-size: 45px;
+font-style: normal;
+font-weight: 700;
+line-height: 56px;
+letter-spacing: -0.55px;
+font-family: "Playfair Display", sans-serif;
+}
+
+.mt-70 {
+  margin-top: 70px;
+}
+
+.my-10 {
+  margin: 10px 0 10px;
+  display: block;
+}
+
 .anchorLink h3 span{
     color:#d0021b;
 }
@@ -4450,6 +4470,11 @@ li.current-menu-item a,
   padding-left: 80px;
 }
 
+.slickDots__alignBottom .slick-dots {
+  bottom: -200px;
+  padding-left: 80px;
+}
+
 .slick-dots li button:before {
   color: #9b9b9b;
 }
@@ -4560,6 +4585,12 @@ li.current-menu-item a,
   position: absolute;
 }
 
+.home__academicProgrammes {
+  height: 350px;
+  right: 15px;
+  top: -50%;
+}
+
 .color__grey {
   color: #1e1e1e;
 }
@@ -4572,6 +4603,37 @@ li.current-menu-item a,
 .redBlockCarousel .slick-dots li.slick-active button:before {
   color: #ffffff !important;
   opacity: 1;
+}
+
+/*==================================================
+	Home – Academic Programmes (scoped to this section)
+====================================================*/
+
+/* Dots: centered and moved down below the red block */
+.home__academicSection .slick-dots {
+  bottom: -290px;
+  padding-left: 0;
+  text-align: center;
+}
+
+/* Inactive dots: grey; Active dot: red */
+.home__academicSection .redBlockCarousel .slick-dots li button:before {
+  color: #9b9b9b !important;
+  opacity: 1;
+}
+
+.home__academicSection .redBlockCarousel .slick-dots li.slick-active button:before {
+  color: #d0021b !important;
+  opacity: 1;
+}
+
+/* Side paddings inside the red text block */
+.home__academicSection .way__footer-spacing {
+  padding: 50px 60px 51px 60px;
+}
+
+.home__academicSection .no-padding {
+  padding-top: 52px;
 }
 
 /*==================================================
@@ -9826,3 +9888,21 @@ label {
 }
 
 /* Search Mobile Changes */
+
+/* ==========================================================================
+   Home Page — Testimonials Carousel
+   Wraps the testimonials_loop (.fullPage__section slides) in home.php
+   ========================================================================== */
+
+/* Before slick initialises, show only the first testimonial to avoid a
+   flash of all slides stacked vertically */
+.homeTestimonials__carousel:not(.slick-initialized) .fullPage__section { display: none; }
+.homeTestimonials__carousel:not(.slick-initialized) .fullPage__section:first-child { display: block; }
+
+/* Each testimonial fills the slide width */
+.homeTestimonials__carousel .slick-slide { height: auto; }
+
+/* Carousel controls */
+.homeTestimonials__carousel .slick-dots { position: static; margin-top: 20px; }
+.homeTestimonials__carousel .slick-prev,
+.homeTestimonials__carousel .slick-next { z-index: 2; }
