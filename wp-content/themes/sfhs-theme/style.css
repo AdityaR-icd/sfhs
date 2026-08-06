@@ -2187,6 +2187,10 @@ input[type="radio"]:focus {
   letter-spacing: 0;
 }
 
+.footer--font span {
+  color:#D0021B;
+}
+
 .bold-font {
   font-family: "Work Sans", sans-serif;
   font-weight: 600;
@@ -4578,6 +4582,10 @@ li.current-menu-item a,
   padding-top: 65px;
 }
 
+.educators__footer-padding h3 {
+  color: #D0021B;
+}
+
 .educators__wayBlock {
   height: 280px;
   width: 75%;
@@ -4656,7 +4664,7 @@ li.current-menu-item a,
 }
 
 .spaces__angle {
-  padding-right: 28px;
+  /* padding-right: 28px; */
   padding-bottom: 60px;
 }
 
@@ -4938,9 +4946,10 @@ svg.homeAnimation {
   z-index: 9;
 }
 h3 em{
-        font-style: normal;
+        font-style: italic;
+        color: #d0021b;
            position: relative;
-    top: -4px;
+    /* top: -4px; */
 }
  p u{
     text-decoration: none;
@@ -5254,7 +5263,9 @@ h3 em{
   color: #00a550 !important;
   border-bottom: 1px solid #00a550;
 }
-.newadmission .tabitem {
+.newadmission .tabitem,
+.schoolPage .tabitem,
+.spacesPage .tabitem {
   color: #1e1e1e;
   font-family: "Work Sans";
   font-style: normal;
@@ -5264,6 +5275,115 @@ h3 em{
 .tabitem::after {
   content: none !important;
 }
+/* Hero copy sits in brand red on the school pages. The red was authored as an
+   inline colour in the CFS wysiwyg, but the `the_content` filter in
+   functions.php:447 strips inline styles, so set it in CSS instead. */
+.schoolPage .aim__hero-text {
+  color: #d0021b;
+}
+
+/* Section carousels: the shared `.slick-dots` sit 100px down, which is meant for
+   the taller blocks on our-spaces. The image-left layout wants them inside the
+   60px `.spaces__angle` bottom padding; the parallax layout has no such padding,
+   so they hang below the image instead. */
+.schoolPage .schoolSection--carousel .slick-dots {
+  bottom: 12px;
+}
+.schoolPage .schoolSection--parallax .slick-dots {
+  bottom: -50px;
+}
+
+/* The column and panel blocks each show a single full-width photo, so let it
+   fill the container rather than sitting at its natural width. */
+.schoolPage .schoolSection--columns img,
+.schoolPage .schoolSection--panel img {
+  width: 100%;
+}
+
+/* Parallax red slab ---------------------------------------------------------
+   our-spaces builds the slanted slab out of four `spaces*__angle` spans whose
+   border widths are hard-coded to that page's block: 490/463px across (which
+   happens to be a col-md-5) and 520/522px down. The vertical pair is the
+   problem — the school block is shorter than 520px, so those wedges overshoot
+   and spike out past the bottom corners, and the 463px bottom wedge leaves a
+   step short of the right edge.
+
+   The shape they add up to is a 25px skew on each side: the top edge rises
+   25px to the right, the bottom edge follows it, and both sides lean right on
+   the way down. That is the same slab at any size when it's cut out of the
+   block itself, so the school pages clip rather than stack wedges. */
+@media only screen and (min-width: 769px) {
+  .schoolPage .schoolSection--parallax .spaces__block {
+    background-color: #d0021b;
+    -webkit-clip-path: polygon(0 25px, 100% 0, calc(100% - 25px) calc(100% - 25px), 25px 100%);
+    clip-path: polygon(0 25px, 100% 0, calc(100% - 25px) calc(100% - 25px), 25px 100%);
+  }
+  .schoolPage .schoolSection--parallax .spacesTop__angle,
+  .schoolPage .schoolSection--parallax .spacesRight__angle,
+  .schoolPage .schoolSection--parallax .spacesLeft__angle,
+  .schoolPage .schoolSection--parallax .spacesBottom__angle {
+    display: none;
+  }
+}
+
+.schoolPage .schoolGallery__band {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  overflow: hidden;
+  padding: 30px 0;
+}
+
+.schoolPage .schoolGallery__strip img {
+  width: 100%;
+  max-height: fit-content;
+  object-fit: cover;
+  display: block;
+}
+
+/* Latest news ---------------------------------------------------------------
+   The cards reuse category-news.php's markup, but `.newslist__container` is
+   sized for the masonry grid on that page (23.33% wide with a 75px left
+   margin). Here they sit in bootstrap columns, so hand the sizing back. */
+.schoolPage .schoolNews .newslist__container {
+  float: none;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+/* Fill the card frame rather than letterboxing against the grey placeholder. */
+.schoolPage .schoolNews .newsImg__container img {
+  object-fit: cover;
+}
+.schoolPage .schoolNews__label {
+  display: block;
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #1e1e1e;
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+  
+  .schoolPage .schoolNews__label {
+    margin-bottom: 20px;
+  }
+  .schoolPage .schoolNews .newslist__container {
+    margin-bottom: 40px !important;
+  }
+}
+
+/* `.redtheme h3` / `.greentheme h3` paint every heading in the campus colour
+   with !important, which leaves this one red-on-red inside the slab. */
+.schoolPage .schoolSection--parallax .redTextBlock h1,
+.schoolPage .schoolSection--parallax .redTextBlock h3 {
+  color: #ffffff !important;
+}
+
 
 @media (max-width: 991px) {
   .admissionfirstComponent {
@@ -5276,7 +5396,9 @@ h3 em{
     margin-left: 20px;
     margin-right: 20px;
   }
-  .newadmission .tabitem {
+  .newadmission .tabitem,
+  .schoolPage .tabitem,
+  .spacesPage .tabitem {
     font-size: 12px;
     line-height: 16px;
     width: fit-content;
@@ -5336,7 +5458,9 @@ h3 em{
     line-height: 60px; /* 100% */
     letter-spacing: -0.6px;
   }
-  .newadmission .tabitem {
+  .newadmission .tabitem,
+  .schoolPage .tabitem,
+  .spacesPage .tabitem {
     font-size: 14px;
     line-height: 16px;
   }
@@ -9906,3 +10030,672 @@ label {
 .homeTestimonials__carousel .slick-dots { position: static; margin-top: 20px; }
 .homeTestimonials__carousel .slick-prev,
 .homeTestimonials__carousel .slick-next { z-index: 2; }
+
+/* ==========================================================================
+   Home — Latest News section
+   ========================================================================== */
+.latestNews__home .latestNews__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 200px 0 60px;
+}
+
+.home__label {
+  margin-top: 20px;
+  margin-bottom: 60px;
+  color: #E5E5E5;
+font-family: "Work Sans";
+font-size: 60px;
+font-style: normal;
+font-weight: 800;
+line-height: 53px; /* 88.333% */
+letter-spacing: -0.6px;
+text-transform: uppercase;
+}
+
+/* Large ghost-grey "Latest News" heading (added manually in template) */
+.latestNews__label {
+  color: #E5E5E5;
+font-family: "Work Sans";
+font-size: 60px;
+font-style: normal;
+font-weight: 800;
+line-height: 53px; /* 88.333% */
+letter-spacing: -0.6px;
+text-transform: uppercase;
+}
+
+/* "See All News >" link, top-right */
+.latestNews__seeall,
+.latestNews__seeall:hover,
+.latestNews__seeall:focus {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #d0021b;
+  font-size: 13px;
+  letter-spacing: 1.4px;
+  display: inline-block;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.latestNews__seeall span { margin-left: 5px; }
+
+/* Red serif article title */
+.latestNews__title {
+  color: #D0021B;
+font-family: "Playfair Display";
+font-size: 45px;
+font-style: normal;
+font-weight: 400;
+line-height: 50px; /* 111.111% */
+margin-bottom: 32px;
+}
+
+/* Excerpt copy — muted grey (overrides .font--red p) */
+.latestNews__home .latestNews__content p {
+  color: #1E1E1E;
+font-family: "Work Sans";
+font-size: 17px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 141.176% */
+letter-spacing: -0.3px;
+}
+
+/* "Read More >" link */
+.latestNews__readmore {
+  display: inline-block;
+  margin-top: 18px;
+}
+.latestNews__readmore .read__more {
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #d0021b;
+}
+.latestNews__readmore .read__more span { margin-left: 5px; }
+
+@media (max-width: 991px) {
+  .latestNews__label { font-size: 30px; }
+}
+
+@media (max-width: 767px) {
+  .latestNews__label { font-size: 24px; }
+  .latestNews__home .content-formatting { margin-top: 30px; }
+  .latestNews__title { font-size: 24px; }
+}
+
+/* ----------------------------------------------------------------------------
+   Hero title for the video-hero component (.admissionComponent / .schoolComponent)
+   Kept at the END of the file on purpose. `.templatePage h2` (Playfair, red,
+   font-family !important) has the SAME specificity as `.admissionComponent h2`
+   (both 0,0,1,1), so which one wins is decided by source order. Placed after
+   `.templatePage h2`, this rule wins the tie — no specificity hacks needed.
+   Scoped to the hero text container, so no other h2 on the page is affected.
+---------------------------------------------------------------------------- */
+.admissionComponent h2,
+.schoolComponent h2 {
+  color: #000 !important;
+  font-family: "Work Sans" !important;
+  font-size: 60px !important;
+  font-style: normal !important;
+  font-weight: 800 !important;
+  line-height: 63px !important; /* 105% */
+  letter-spacing: -0.6px !important;
+  text-transform: uppercase !important;
+  opacity: 0.1034 !important;
+}
+
+/* 60px runs off the side of a phone — scale down, matching the sizes the old
+   `.admissionfirstComponent .title` used. `.hero__text-container` is absolutely
+   positioned with `max-width: 600px`, so on a narrow screen it stays wider than
+   the viewport and the title gets clipped by the hero's `overflow: hidden`
+   instead of wrapping. Capping it at 100% of the hero forces the wrap. */
+@media (max-width: 991px) {
+  .schoolPage .hero__text-container {
+    max-width: 100%;
+    padding-right: 20px;
+  }
+  .admissionComponent h2,
+  .schoolComponent h2 {
+    font-size: 30px !important;
+    line-height: 32px !important;
+    letter-spacing: -0.35px !important;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   A Student's Journey (All Programmes page)
+   Heading + intro copy above a supplied timeline artwork. The artwork itself is
+   an uploaded image, so there is no grid or arrow to style here.
+---------------------------------------------------------------------------- */
+
+/* Two classes (0,0,2,0) so it outranks `.templatePage h2` (0,0,1,1), which would
+   otherwise force this heading red at 34px. font-family still needs !important
+   because that rule marks its own font-family !important. */
+.journey .journey__heading {
+  color: #000;
+  font-family: "Work Sans", sans-serif !important;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 63px;
+  letter-spacing: -0.6px;
+  text-transform: uppercase;
+  opacity: 0.1034;
+  margin: 0;
+}
+
+.journey__intro {
+  font-family: "Work Sans", sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.journey__image {
+  margin-top: 60px;
+  margin-left: 72px;
+}
+
+.journey__image img {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  .journey .journey__heading {
+    font-size: 30px;
+    line-height: 32px;
+    letter-spacing: -0.35px;
+  }
+
+  .journey__image {
+    margin-top: 30px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Quick Comparison table (All Programmes page)
+   A plain table: red header row over grey body cells, separated by white
+   gutters. The gutters are `border-spacing`, not borders, so each cell keeps one
+   solid background — `border-collapse: separate` is what makes that work.
+   The red angled corner is NOT redefined here: the table is wrapped in the
+   theme's existing `.spaces__angle` (inside a `.pos_relative` row), the same
+   treatment used on Our Spaces and the school page, so it stays consistent and
+   picks up the responsive rules already written for it.
+---------------------------------------------------------------------------- */
+
+/* Two classes (0,0,2,0) to outrank `.templatePage h2` (0,0,1,1) — same reason as
+   the journey heading above. */
+.comparison .comparison__heading {
+  color: #000;
+  font-family: "Work Sans", sans-serif !important;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 63px;
+  letter-spacing: -0.6px;
+  text-transform: uppercase;
+  opacity: 0.1034;
+  margin: 0 0 40px;
+}
+
+/* The table has a sensible min-width, so on narrow screens it scrolls sideways
+   inside this wrapper rather than squashing the cells into unreadable columns. */
+.comparison__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.comparison__table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 7px;
+  table-layout: fixed;
+}
+
+.comparison__table th {
+  background: #d0021b;
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  text-align: center;
+  text-transform: uppercase;
+  height: 56px;
+  padding: 10px 14px;
+  vertical-align: middle;
+}
+
+.comparison__table td {
+  background: #e8e8e8;
+  color: #1e1e1e;
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  line-height: 19px;
+  text-align: center;
+  height: 62px;
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+/* First column names the programme — it reads as the row's label, not data. */
+.comparison__table td:first-child {
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+  .comparison .comparison__heading {
+    font-size: 30px;
+    line-height: 32px;
+    letter-spacing: -0.35px;
+  }
+
+  .comparison__table th {
+    font-size: 11px;
+    height: 50px;
+    padding: 8px;
+  }
+
+  .comparison__table td {
+    font-size: 12px;
+    height: 56px;
+    padding: 10px 8px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Distinctive Features (All Programmes page)
+   Red serif heading + copy on the left, a numbered list on the right. The list
+   is one rich-text field authored as an <ol>; the large red numerals are CSS
+   counters on the list items, so the editor only ever types normal list items.
+---------------------------------------------------------------------------- */
+
+/* Two classes (0,0,2,0) to outrank `.templatePage h2` (0,0,1,1), which sets a
+   looser 45px line-height than the design wants. Colour/family are inherited
+   from that rule — this is the same Playfair red used across template pages. */
+
+/* Bootstrap 3 puts a `display:table` clearfix on `.row:before/:after`. Inside a
+   flex row those become real flex items, so `space-between` pushes them to the
+   edges and the two columns bunch up in the middle. Remove them here. */
+.features .row::before,
+.features .row::after {
+  content: none;
+}
+
+@media (min-width: 992px) {
+  .features .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 217px;
+  }
+}
+
+.features .features__heading {
+  font-size: 34px;
+  line-height: 38px;
+  margin: 0 0 175px;
+  max-width: 260px;
+
+  color: #D0021B;
+font-size: 45px;
+font-weight: 400;
+line-height: 50px; /* 111.111% */
+}
+
+.features__text {
+  font-family: "Work Sans", sans-serif;
+  max-width: 512px;
+
+  color: #1E1E1E;
+font-size: 17px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 141.176% */
+letter-spacing: -0.3px;
+}
+
+.features__text p {
+  margin-bottom: 20px;
+}
+
+.features__list {
+  max-width: 250px;
+  margin-right: 90px;
+}
+
+.features__list ol {
+  counter-reset: features-counter;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.features__list li {
+  counter-increment: features-counter;
+  font-family: "Work Sans", sans-serif;
+
+  margin-bottom: 21px;
+
+  color: #1E1E1E;
+font-size: 17px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px;
+letter-spacing: -0.3px;
+}
+
+/* The numeral sits on its own line above the item text, as in the design. */
+.features__list li::before {
+  content: counter(features-counter);
+  display: block;
+  color: #D0021B;
+font-size: 60px;
+font-style: normal;
+font-weight: 800;
+line-height: 53px; /* 88.333% */
+letter-spacing: -0.6px;
+text-transform: uppercase;
+}
+
+.features__list li:last-child {
+  margin-bottom: 0;
+}
+
+/* Stacked on one column the heading no longer needs the tall gap that pushes the
+   copy down beside the list. */
+@media (max-width: 991px) {
+  .features .features__heading {
+    margin-bottom: 30px;
+  }
+
+  .features__list {
+    margin-top: 50px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Dive Into The Programmes (All Programmes page)
+   Section heading, then one alternating image/copy row per programme. The grid
+   and the left/right flip come from the theme's existing template-row classes
+   (.templateContent__Container, .leftImage/.rightImage, col offsets), so only
+   the typography and the "Details >" link are defined here.
+---------------------------------------------------------------------------- */
+
+/* Two classes (0,0,2,0) to outrank `.templatePage h2` (0,0,1,1), which sets its
+   own size and marks font-family !important. Same construction as the journey
+   and comparison headings, but solid red rather than the ghosted black. */
+.dive .dive__heading {
+      color: #000;
+    font-family: "Work Sans", sans-serif !important;
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 63px;
+    letter-spacing: -0.6px;
+    text-transform: uppercase;
+    opacity: 0.1034;
+    margin: 0 0 70px;
+max-width: 450px;
+}
+
+.dive__row {
+  margin-bottom: 83px;
+}
+
+.dive__row:last-child {
+  margin-bottom: 0;
+}
+
+/* Playfair red, matching the `About …` headings in the design. Two classes so it
+   is not overridden by `.templatePage h2`-style rules further up the sheet. */
+.dive .dive__title {
+  color: #d0021b;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 36px;
+  margin: 0 0 43px;
+}
+
+.dive__text {
+  font-family: "Work Sans", sans-serif;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.dive__text p {
+  margin: 0 0 16px;
+}
+
+.dive__text p:last-child {
+  margin-bottom: 0;
+}
+
+.dive__link {
+  display: inline-block;
+  margin-top: 28px;
+  font-family: "Work Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #d0021b;
+}
+
+.dive__link::after {
+  display: none;
+}
+
+.dive__link:hover,
+.dive__link:focus {
+  color: #d0021b;
+  text-decoration: none;
+}
+
+.dive__link span {
+  margin-left: 5px;
+}
+
+/* Below the lg breakpoint `.templateContent__Container` reverts to a block, so
+   the image and copy stack and the side padding on .leftImage/.rightImage only
+   pulls the image off-centre. */
+@media (max-width: 991px) {
+  .dive .dive__heading {
+    font-size: 40px;
+    line-height: 44px;
+    margin-bottom: 40px;
+  }
+
+  .dive__row {
+    margin-bottom: 60px;
+  }
+
+  .dive .dive__media {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 25px;
+  }
+
+  .dive .dive__media img {
+    margin: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .dive .dive__heading {
+    font-size: 30px;
+    line-height: 32px;
+    letter-spacing: -0.35px;
+  }
+
+  .dive .dive__title {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   FAQs (All Programmes page)
+   An accordion of grey bars that turn red when open. The whole bar is a
+   <button>, so `aria-expanded` carries the state for both assistive tech and
+   the open styling — there is no separate `.is-open` class to keep in sync.
+   The panel itself is toggled by jQuery slideToggle in assets/js/script.js.
+---------------------------------------------------------------------------- */
+
+/* Two classes (0,0,2,0) to outrank `.templatePage h2` (0,0,1,1), which sets its
+   own size and marks font-family !important — same construction as the journey
+   and comparison headings. No text-transform here: the design shows "FAQs" with
+   a lowercase s, so the casing comes from what the editor types. */
+.faqs .faqs__heading {
+  color: #000;
+  font-family: "Work Sans", sans-serif !important;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 63px;
+  letter-spacing: -0.6px;
+  opacity: 0.1034;
+  margin: 0 0 40px;
+}
+
+.faqs__item {
+  margin-bottom: 20px;
+}
+
+.faqs__item:last-child {
+  margin-bottom: 0;
+}
+
+/* Reset the UA button styling — this is a full-width bar, not a control. */
+.faqs__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 22px 30px;
+  border: 0;
+  border-radius: 0;
+  text-align: left;
+  background: #e6e6e6;
+  color: #000;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.faqs__question:hover,
+.faqs__question:focus {
+  background: #dcdcdc;
+  outline: none;
+}
+
+.faqs__question:focus-visible {
+  outline: 2px solid #d0021b;
+  outline-offset: 2px;
+}
+
+.faqs__label {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  padding-right: 30px;
+}
+
+/* The open bar is red, and its right edge is a single diagonal running the full
+   height — the bottom edge is the full width, the top edge is pulled in. The cut
+   is a clip-path rather than a pseudo-element so it survives the background
+   colour change without a second stacking layer. Adjust the 26px to change the
+   rake of the slant; the extra right padding keeps the icon clear of it. */
+.faqs__question[aria-expanded="true"] {
+  background: #d0021b;
+  color: #fff;
+  padding-right: 48px;
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 100%, 0 100%);
+}
+
+.faqs__question[aria-expanded="true"]:hover,
+.faqs__question[aria-expanded="true"]:focus {
+  background: #d0021b;
+}
+
+.faqs__icon {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+}
+
+/* Closed shows the chevron, open shows the cross. */
+.faqs__question .faqs__cross,
+.faqs__question[aria-expanded="true"] .faqs__chevron {
+  display: none;
+}
+
+.faqs__question[aria-expanded="true"] .faqs__cross {
+  display: block;
+}
+
+/* Hidden by default; jQuery slideToggle animates this open. Keeping it
+   display:none (rather than height:0) also keeps it out of the a11y tree. */
+.faqs__answer {
+  display: none;
+}
+
+.faqs__answer-inner {
+  padding: 35px 100px 50px 30px;
+ color: #000;
+font-family: "Work Sans";
+font-size: 17px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 141.176% */
+letter-spacing: -0.486px;
+}
+
+.faqs__answer-inner p {
+  margin: 0 0 14px;
+}
+
+.faqs__answer-inner p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+  .faqs .faqs__heading {
+    font-size: 40px;
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 767px) {
+  .faqs .faqs__heading {
+    font-size: 30px;
+    line-height: 32px;
+    letter-spacing: -0.35px;
+    margin-bottom: 25px;
+  }
+
+  .faqs__question {
+    padding: 16px 18px;
+  }
+
+  /* Shallower slant on the narrower bar, and the matching padding so the cross
+     still clears it. */
+  .faqs__question[aria-expanded="true"] {
+    padding-right: 32px;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 100%, 0 100%);
+  }
+
+  .faqs__label {
+    font-size: 17px;
+    line-height: 24px;
+    padding-right: 15px;
+  }
+
+  .faqs__answer-inner {
+    padding: 16px 18px 6px;
+  }
+}

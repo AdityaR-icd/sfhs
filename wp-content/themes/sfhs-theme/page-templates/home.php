@@ -21,6 +21,7 @@ scrollTopValue = 400;
         <div class="herosection_admission">
 
             <div class="container heroadmissionContainer">
+                <h2 class="home__label">SFHS FAMILY</h2>
                 <div class="row">
                     <a href='admission-sfhs-chandigarh'>
                         <div class="col-md-6 first-card">
@@ -192,6 +193,61 @@ scrollTopValue = 400;
         <div id="tickerTrigger">
 
 
+
+            <section class="mobile__mB-40 latestNews__home">
+                <div class="container ">
+                    <!-- Latest News -->
+                    <div class="row latestNews__topbar">
+                        <div class="col-xs-8 col-md-8">
+                            <h2 class="latestNews__label">Latest News</h2>
+                        </div>
+                        <div class="col-xs-4 col-md-4 text-right">
+                            <a class="latestNews__seeall" href="<?php echo get_home_url(); ?>/category/news/">See All
+                                News </a>
+                        </div>
+                    </div>
+
+                    <div class="latestNews__row">
+                        <div class="col-md-8 col-md-push-4 no-padding">
+                            <div class="fade_img slope-triangle">
+                                <?php
+                                        // News image. User cannot upload locally yet, so fall
+                                        // back to an existing site image as a placeholder.
+                                        $news_image = CFS()->get( 'news_image' , $post_ID );
+                                        if ( empty( $news_image ) ) {
+                                                $news_image = 'https://strawberryfieldshighschool.com/wp-content/uploads/2024/12/image1.png';
+                                        }
+                                ?>
+                                <div><img data-lazy="<?php echo $news_image; ?>" class="img-responsive" alt=""></div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 col-md-pull-8">
+                            <div class="content-formatting content_padding-60 font--red anchorLink latestNews__content">
+                                <h2 class="latestNews__title"><?php echo CFS()->get('title', $post_ID); ?></h2>
+                                <?php
+                                            // Excerpt WYSIWYG. Strip any manually-typed "READ MORE"
+                                            // paragraph — the wysiwyg has no link tool, so the
+                                            // real READ MORE link is rendered from the template below.
+                                            $excerpt = CFS()->get('excerpt', $post_ID);
+                                            $excerpt = preg_replace('/<p>\s*(<a[^>]*>)?\s*READ\s*MORE\s*(<\/a>)?\s*<\/p>/i', '', $excerpt);
+                                            echo $excerpt;
+
+                                            $news_link = CFS()->get('news_link', $post_ID);
+                                    ?>
+                                <a class="latestNews__readmore"
+                                    href="<?php echo $news_link ? esc_url($news_link) : '#'; ?>">
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- End of Latest News -->
+                </div>
+            </section>
 
             <div class="homeTestimonials__carousel">
                 <?php

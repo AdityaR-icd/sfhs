@@ -660,4 +660,23 @@ $(document).ready(function () {
     "waves-ripple",
   ]);
   Waves.init();
+
+  // FAQ accordion — one panel open at a time. aria-expanded on the button is the
+  // single source of truth: the CSS keys the red/open styling off it, so nothing
+  // here needs to add or remove a state class.
+  $(".faqs__question").on("click", function () {
+    var $button = $(this);
+    var wasOpen = $button.attr("aria-expanded") === "true";
+    var $list = $button.closest(".faqs__list");
+
+    // Close everything in this accordion, including the clicked row — reopening
+    // it below is what makes a second click on an open row collapse it.
+    $list.find(".faqs__question").attr("aria-expanded", "false");
+    $list.find(".faqs__answer").slideUp(250);
+
+    if (!wasOpen) {
+      $button.attr("aria-expanded", "true");
+      $button.siblings(".faqs__answer").slideDown(250);
+    }
+  });
 });
