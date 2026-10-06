@@ -202,6 +202,27 @@ scrollTopValue = 2200;
             </div>
         </div>
 
+        <?php
+		$image = CFS()->get( 'carousel_1' , $post_ID);
+
+		// Where the slides carry their own text, the copy beside the carousel
+		// changes with the image rather than sitting there as one fixed block —
+		// the same synced pair as Section 2. Campuses that leave the per-slide
+		// text empty keep the single `carousel_1_text` block, so this is opt-in
+		// per page and the layout is identical either way.
+		// Tested on the raw value, not on strip_tags() of it: the theme's
+		// the_content filter prefixes every wysiwyg field with an `<?xml ...>`
+		// declaration, and strip_tags reads `<?` as an unterminated processing
+		// instruction and throws the whole string away.
+		$carousel_1_synced = false;
+		foreach ( (array) $image as $row ) {
+			if ( '' !== trim( $row['slide_text'] ?? '' ) ) {
+				$carousel_1_synced = true;
+				break;
+			}
+		}
+		?>
+
         <section class="mB__160 mobile__mB-40">
 
             <div class="container ">
@@ -209,26 +230,41 @@ scrollTopValue = 2200;
 
                 <div class="row pos_relative">
                     <div class="col-md-7 no-padding">
-                        <div class="spaces__angle fade_img">
-                            <?php 
-													$image = CFS()->get( 'carousel_1' , $post_ID);
-													foreach ( $image as $row ):
-											?>
+                        <div
+                            class="spaces__angle <?php echo $carousel_1_synced ? 'spacesSection1__imgSlide' : 'fade_img'; ?>">
+                            <?php foreach ( $image as $row ) : ?>
                             <div><img data-lazy="<?php echo $row['image']; ?>" class="img-responsive" alt=""></div>
-                            <?php 
-													endforeach;
-											?>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
 
                     <div class="col-md-5">
+                        <?php if ( $carousel_1_synced ) : ?>
+                        <div class="spacesSection1__textSlide">
+                            <?php foreach ( $image as $row ) : ?>
+                            <div>
+                                <div class="content_padding-38 font--red spacesBlock__spacing anchorLink">
+                                    <?php echo $row['slide_text'] ?? ''; ?>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php else : ?>
                         <div class="content_padding-38 font--red spacesBlock__spacing anchorLink">
                             <?php echo CFS()->get('carousel_1_text', $post_ID); ?>
                         </div>
+                        <?php endif; ?>
                     </div>
 
                 </div>
+
+                <?php if ( $carousel_1_synced ) : ?>
+                <!-- Slick drops its dots inside the slider, which would put them
+                     under the image alone. They belong under the pair, so they
+                     are appended here instead (see `appendDots` in script.js). -->
+                <div class="spacesSection1__dots"></div>
+                <?php endif; ?>
 
                 <!-- End of Content 5 -->
             </div>
@@ -280,6 +316,63 @@ scrollTopValue = 2200;
 
         </section>
 
+        <?php
+		// Section 2 body. Where the "Section 2 Carousel" loop is filled in, the
+		// single video is replaced by an image carousel and the three-column
+		// block below it becomes a second, synced carousel — same layout, but
+		// the columns change with the image. Campuses that leave the loop empty
+		// keep the original video + static columns, so this is opt-in per page.
+		$section_2_carousel = CFS()->get('section_2_carousel', $post_ID);
+		?>
+
+        <?php if (!empty($section_2_carousel)) : ?>
+
+        <section class="mB__80 mobile__mB-40">
+            <div class="container ">
+
+                <div class="row">
+                    <div class="col-md-12 no-padding">
+                        <div class="spacesSection2__imgSlide">
+                            <?php foreach ($section_2_carousel as $row) : ?>
+                            <div><img data-lazy="<?php echo $row['slide_image']; ?>" class="img-responsive" alt="">
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mB__120 mobile__mB-40">
+            <div class="container ">
+                <div class="spacesSection2__textSlide">
+                    <?php foreach ($section_2_carousel as $row) : ?>
+                    <div>
+                        <div class="row pos_relative">
+                            <div class="col-md-12 ">
+                                <h3 class="font--red margin_right"><?php echo $row['slide_column_header']; ?></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5  rightPadding">
+                                <?php echo $row['slide_column_1']; ?>
+                            </div>
+                            <div class="col-md-4  paragraph_right-padding">
+                                <?php echo $row['slide_column_2']; ?>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="multiLink"><?php echo $row['slide_column_3']; ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+        <?php else : ?>
+
         <section class="mB__80 mobile__mB-40">
             <div class="container ">
 
@@ -324,6 +417,8 @@ scrollTopValue = 2200;
                 </div>
             </div>
         </section>
+
+        <?php endif; ?>
 
 
         <section class="container " id="<?php echo $sectionID[$i]; ?>">

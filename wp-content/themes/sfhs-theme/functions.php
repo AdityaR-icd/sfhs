@@ -444,6 +444,109 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Our Spaces, New Chandigarh: take the Section 2 fields the slide carousel
+ * replaced off the editing screen.
+ *
+ * The fields can't simply be deleted from the "Our Spaces" field group — both
+ * campuses share that group, and Chandigarh still runs its Section 2 off the
+ * video plus the three static columns. So they are hidden for the one campus
+ * whose template no longer prints them, which stops anyone filling in a field
+ * that will never appear on the page.
+ *
+ * Note that CFS rewrites a group's values on every save, so a field hidden here
+ * is also cleared here — which is why this is matched to a single, already
+ * emptied entry by slug rather than applied by post type.
+ */
+add_filter( 'cfs_pre_render_fields', function( $fields, $params ) {
+	$post_id = empty( $params['post_id'] ) ? 0 : (int) $params['post_id'];
+
+	if ( 0 === $post_id || 'our-spaces-new-chandigarh' !== get_post_field( 'post_name', $post_id ) ) {
+		return $fields;
+	}
+
+	$replaced_by_carousel = [
+		// Section 1: the single block of copy, now carried per slide instead.
+		'carousel_1_text',
+		// Section 2: the video and the static three columns under it.
+		'video',
+		'video_poster_2',
+		'column_header',
+		'column_1',
+		'column_2',
+		'column_3',
+	];
+
+	foreach ( $fields as $key => $field ) {
+		// Top-level only: `slide_column_1` and friends live inside the carousel
+		// loop and share none of these names, but stay explicit about it.
+		if ( 0 == $field->parent_id && in_array( $field->name, $replaced_by_carousel, true ) ) {
+			unset( $fields[ $key ] );
+		}
+	}
+
+	return $fields;
+}, 10, 2 );
+
+/**
+ * CIS page: keep pasted bold text bold.
+ *
+ * Pasting from Word or Docs stores bold as `<span style="font-weight: bold">`
+ * rather than `<strong>`. The filter below this one strips every style
+ * attribute, so that span arrives at the template as a plain `<span>` and the
+ * bold is simply gone — `.templatePage strong` never gets a chance to style it,
+ * because there is no strong tag in the markup at all.
+ *
+ * Running at priority 19 puts this ahead of the stripper: promote the bold to a
+ * real `<strong>` first, and the style attribute is then redundant when it goes.
+ * Scoped to the CIS template — the same loss happens site-wide, but repairing it
+ * everywhere would turn bold back on across pages that have been living without
+ * it, which is a change to make deliberately rather than in passing.
+ */
+add_filter( 'the_content', function( $content ) {
+	if ( empty( $content ) || ! is_page_template( 'page-templates/cis.php' ) ) {
+		return $content;
+	}
+
+	$dom = new DOMDocument();
+	libxml_use_internal_errors( true );
+	$dom->loadHTML( '<?xml encoding="UTF-8">' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+
+	$xpath = new DOMXPath( $dom );
+	$bold  = [];
+
+	foreach ( $xpath->query( '//*[@style]' ) as $node ) {
+		// bold, bolder, or any numeric weight from 600 up.
+		if ( preg_match( '/font-weight\s*:\s*(bold|bolder|[6-9]00)/i', $node->getAttribute( 'style' ) ) ) {
+			$bold[] = $node;
+		}
+	}
+
+	foreach ( $bold as $node ) {
+		$strong = $dom->createElement( 'strong' );
+
+		// Move the children across rather than re-parsing innerHTML.
+		while ( $node->firstChild ) {
+			$strong->appendChild( $node->firstChild );
+		}
+
+		if ( 'span' === strtolower( $node->nodeName ) ) {
+			// The span carried nothing but the weight — swap it out entirely.
+			$node->parentNode->replaceChild( $strong, $node );
+		} else {
+			// A block element (a bold paragraph, say) has to stay put, so the
+			// strong goes inside it instead of replacing it.
+			$node->appendChild( $strong );
+		}
+	}
+
+	$out = $dom->saveHTML();
+	libxml_clear_errors();
+
+	return $out;
+}, 19 );
+
 add_filter('the_content', function( $content ) {
     if (empty($content)) {
         return $content;

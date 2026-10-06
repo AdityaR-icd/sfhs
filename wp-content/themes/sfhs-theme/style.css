@@ -1510,6 +1510,7 @@ input[type="radio"]:focus {
   line-height: 53px;
   letter-spacing: -0.6px;
   color: #dedede;
+      margin-left: 15px !important;
 }
 
 /* End of heading under upper navbar */
@@ -4161,13 +4162,14 @@ li.current-menu-item a,
 }
 
 .aim__Heading-P {
-  padding-right: 150px;
+  
   display: block;
-  font-family: "Playfair Display", sans-serif;
-  font-size: 45px;
-  line-height: 50px;
-  margin-bottom: 52px;
-  letter-spacing: 0;
+  color: #1E1E1E;
+font-family: "Playfair Display";
+font-size: 45px;
+font-style: normal;
+font-weight: 400;
+line-height: 50px;
 }
 
 .aim__hero-shape {
@@ -10698,4 +10700,239 @@ letter-spacing: -0.486px;
   .faqs__answer-inner {
     padding: 16px 18px 6px;
   }
+}
+
+/* ----------------------------------------------------------------------------
+   Our Spaces – Section 1 carousel
+   The image carousel with the copy beside it sliding in step. The layout is the
+   `.spaces__angle` image-left block unchanged — the red angled shape, its 60px
+   of bottom padding and the text column all stay put — so the only thing that
+   needs saying here is where the dots go and what colour they are.
+---------------------------------------------------------------------------- */
+
+/* `.slick-active { font-size: 25px }` in the carousel overrides is written for
+   the dots but is unscoped, so it lands on the active slide too and inflated
+   this copy to 25px against its 24px line-height. Inherit puts it back to the
+   body size at whatever the breakpoint is. Section 2 carries the same fix. */
+.spacesSection1__textSlide .slick-slide {
+  font-size: inherit;
+}
+
+/* The dots are appended to their own container under the image/text pair, so
+   they flow rather than sitting absolutely inside the slider — hence `static`,
+   which also retires slick's own -25px offset. */
+.spacesSection1__dots .slick-dots {
+  position: static;
+  text-align: center;
+  /* margin-top: 34px; */
+}
+
+/* On white here, so the theme-wide white active dot would vanish. */
+.spacesSection1__dots .slick-dots li button:before {
+  color: #9b9b9b;
+}
+
+.spacesSection1__dots .slick-dots li.slick-active button:before {
+  color: #d0021b !important;
+}
+
+/* ----------------------------------------------------------------------------
+   Our Spaces – Section 2 carousel
+   Full-width image slider with the three-column text block below it sliding in
+   step (slick asNavFor). Layout is unchanged from the video version it replaces
+   — the columns are the same `.rightPadding` / `.paragraph_right-padding` /
+   `.multiLink` set, just repeated per slide — so all that is needed here is
+   dot placement and colour.
+---------------------------------------------------------------------------- */
+
+.spacesSection2__imgSlide img {
+  width: 100%;
+  height: auto;
+}
+
+/* `.slick-active { font-size: 25px }` up at the carousel overrides is meant for
+   the dots but is written unscoped, so it lands on the active *slide* of every
+   carousel too. It has never shown because slide text elsewhere always sets its
+   own size — these columns are plain body copy, so the slide on screen would
+   jump to 25px against a 24px line-height. Inherit puts them back to whatever
+   the body size is at the current breakpoint. */
+.spacesSection2__textSlide .slick-slide {
+  font-size: inherit;
+}
+
+/* The shared `.slick-dots` sit 100px down, which would drop them past the 80px
+   gap and on top of the text. Park them inside the gap instead. */
+.spacesSection2__imgSlide .slick-dots {
+  bottom: -50px;
+  text-align: center;
+}
+
+/* Dots sit on white here, so the theme-wide white active dot would vanish. */
+.spacesSection2__imgSlide .slick-dots li button:before {
+  color: #9b9b9b;
+}
+
+.spacesSection2__imgSlide .slick-dots li.slick-active button:before {
+  color: #d0021b !important;
+}
+
+@media (max-width: 767px) {
+  /* Mobile closes the gap to 40px (`.mobile__mB-40`), so the dots come up too. */
+  .spacesSection2__imgSlide .slick-dots {
+    bottom: -30px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   CIS – Section 2
+   Heading and copy on the left, image on the right. The grid, the vertical
+   centring and the type all come from the template-page styles already in this
+   sheet (`.templateContent__Container`, `.rightImage`, `.templatePage h2`), so
+   the only thing this block owns is the artwork size.
+---------------------------------------------------------------------------- */
+
+/* The section is designed around a 435x303 image. `.img-responsive` already
+   caps it at the column width, so this only matters when a larger export (a 2x
+   asset, say) is uploaded — it holds the intended size instead of stretching
+   the row. The max-width keeps it shrinking normally on narrow screens. */
+.cisContent .rightImage img {
+  max-width: 435px;
+}
+
+@media (max-width: 991px) {
+  /* Stacked layout: the image is on its own row and centred over the copy
+     rather than pinned right, which is what `.rightImage img` does by default. */
+  .cisContent .rightImage {
+    padding-left: 0;
+  }
+
+  .cisContent .rightImage img {
+    margin: 0 auto;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   CIS – section headings
+   The ghosted grey heading that opens sections 3 and 4.
+---------------------------------------------------------------------------- */
+
+/* These are `.head-nav`'s values — the ghosted grey section heading used on Our
+   Aim and Our Spaces, and already carried by this page's own h1. It has to be
+   restated under two classes (0,0,2,0) because `.templatePage h2` (0,0,1,1)
+   would otherwise repaint it as a 34px red Playfair heading, and that rule
+   marks its font-family !important, so this one has to as well. Same
+   construction as the journey, comparison and dive headings above. */
+.templatePage .cisHeading {
+  font-family: "Work Sans", sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 53px;
+  letter-spacing: -0.6px;
+  color: #dedede;
+  margin: 0;
+}
+
+@media only screen and (max-width: 768px) {
+  /* Matching `.sectionHeading`'s mobile step-down, which the rule above outranks. */
+  .templatePage .cisHeading {
+    font-size: 40px;
+    line-height: 38px;
+    letter-spacing: -0.4px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   CIS – Section 3 (feature blocks)
+   The cards are the Our Aim features section verbatim (`.feature__section`,
+   `.featureSection__red1-4` and their corner triangles), so nothing about them
+   is redefined here beyond the measure fix below.
+---------------------------------------------------------------------------- */
+
+/* The Our Aim cards this section borrows carry two-word headings ("no bell."),
+   so the 59px + 45px of horizontal padding inside them never shows. The CIS
+   headings are full phrases and were breaking one word per line, so give the
+   text a workable measure. Scoped to the widest breakpoint on purpose: below
+   1280px the theme already steps that padding down to 19px, and at mobile it
+   left-aligns the card text — none of which should be disturbed here. The red
+   block is unaffected either way, since it takes its width from the column
+   rather than from this padding. */
+@media only screen and (min-width: 1280px) {
+  .cisFeatures .feature__section {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .cisFeatures .feature__heading {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   CIS – Section 4 (closing statement)
+   The white block riding up over the image. These are `.our__aim-footer`'s
+   rules (line ~4110) copied across rather than shared, so that this section can
+   be tuned without moving the block on Our Aim — edit here, not there. Copied,
+   which means it is a snapshot: later changes to `.our__aim-footer` will not
+   reach this one. The stats rules that class also carries are left out; there
+   are no stats in this section.
+---------------------------------------------------------------------------- */
+
+/* The section is the positioning context for everything inside it, so the white
+   block layers over the image predictably rather than against the page. */
+.cisCommitment {
+  position: relative;
+}
+
+/* The pull is a negative top margin, not `top: -130px` as Our Aim's is. `top`
+   only paints the block higher — it leaves its original 130px of space behind,
+   which is where that dead gap above the footer came from, and it is measured
+   from wherever the block happened to land rather than from anything visible.
+   A negative margin is measured from the image directly above it: raise this
+   number and the block rides further up the photo, which is the relationship
+   the design describes.
+   1190px keeps the skewed shape clear of the viewport edges — at 1360 its
+   corners ran to the very edge of the screen and read as cut off. The width
+   floor matters as much as the cap: the skew throws the bottom-left corner
+   about 30px further left than the box, so on a screen only a little wider
+   than 1190 that corner would run off the edge again. Holding 50px of clear
+   space each side keeps the whole shape on screen at every width. */
+.our__commitment-footer {
+  max-width: 1190px;
+  width: calc(100% - 100px);
+  position: absolute !important;
+    top: 83%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+
+/* The white shape itself — skewed a couple of degrees, sitting over the image. */
+.our__commitment-footer::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  transform-origin: top left;
+  transform: skew(0deg, -1deg);
+  background-color: #ffffff;
+}
+
+@media only screen and (max-width: 768px) {
+  /* Mobile drops the overlap and the shape entirely, as Our Aim's does. */
+  .our__commitment-footer {
+    margin-top: 0;
+  }
+
+  .our__commitment-footer::before {
+    height: 0;
+  }
+}
+
+/* With no image set there is nothing to ride up over, and the pull would drag
+   the block into the section above it instead. Sit it back down. Two classes so
+   it outranks the rule above whatever order they end up in. */
+.cisCommitment .cisCommitment__block--noImage {
+  margin-top: 0;
 }

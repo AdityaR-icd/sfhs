@@ -182,6 +182,71 @@ $(document).ready(function () {
     });
   }
 
+  // Our Spaces – Section 1: image carousel with the copy beside it changing in
+  // step. Only present where the slides have been given their own text; without
+  // it the markup keeps the plain .fade_img carousel and this never runs.
+  if ($(".spacesSection1__imgSlide").length) {
+    $(".spacesSection1__imgSlide").slick({
+      lazyLoad: "anticipated",
+      autoplay: true,
+      autoplaySpeed: 7000,
+      infinite: true,
+      fade: true,
+      speed: 400,
+      cssEase: "linear",
+      arrows: false,
+      pauseOnHover: true,
+      asNavFor: ".spacesSection1__textSlide",
+      dots: true,
+      // Out of the slider and under the image/text pair, so the dots read as
+      // belonging to the whole component rather than to the photo.
+      appendDots: ".spacesSection1__dots",
+      draggable: false,
+    });
+    $(".spacesSection1__textSlide").slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      fade: true,
+      asNavFor: ".spacesSection1__imgSlide",
+      dots: false,
+      arrows: false,
+      draggable: false,
+      pauseOnHover: true,
+    });
+  }
+
+  // Our Spaces – Section 2: image carousel with the three-column text block
+  // below it changing in step. Own classes rather than the shared
+  // .img__slide/.text__slide pair, for the same reason as the academic carousel
+  // above. Slower autoplay than the image-only carousels — each slide carries a
+  // few paragraphs, so it needs time to be read (and pauses on hover).
+  if ($(".spacesSection2__imgSlide").length) {
+    $(".spacesSection2__imgSlide").slick({
+      lazyLoad: "ondemand",
+      autoplay: true,
+      autoplaySpeed: 7000,
+      infinite: true,
+      fade: true,
+      speed: 700,
+      cssEase: "linear",
+      arrows: false,
+      pauseOnHover: true,
+      asNavFor: ".spacesSection2__textSlide",
+      dots: true,
+      draggable: false,
+    });
+    $(".spacesSection2__textSlide").slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      fade: true,
+      asNavFor: ".spacesSection2__imgSlide",
+      dots: false,
+      arrows: false,
+      draggable: false,
+      pauseOnHover: true,
+    });
+  }
+
   // Our Aim Features Section Slick
 
   //=================Smooth scrolling to a tag============
