@@ -379,16 +379,22 @@ scrollTopValue = 2200;
                 <div class="row">
                     <div class="col-md-12 no-padding">
                         <div class="playIcon__center inView customPlay replayButton mouseHover mobile__squareVideo">
+                            <?php if ( CFS()->get('video', $post_ID) ) : ?>
                             <video class="video-js vjs-16-9" preload="none"
                                 poster="<?php echo CFS()->get('video_poster_2'  , $post_ID); ?>"
                                 data-setup='{ "controls": false, "autoplay": false }' playsinline>
                                 <source src="<?php echo CFS()->get('video', $post_ID); ?>" type="video/mp4">
                             </video>
+                            <?php elseif ( CFS()->get('video_poster_2'  , $post_ID) ) : ?>
+                            <img src="<?php echo esc_url( CFS()->get('video_poster_2'  , $post_ID) ); ?>" class="img-responsive" alt="">
+                            <?php endif; ?>
+                            <?php if ( CFS()->get('video', $post_ID) ) : ?>
                             <button class="o-play-btn">
                                 <i class="o-play-btn__icon">
                                     <div class="o-play-btn__mask"></div>
                                 </i>
                             </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -547,16 +553,22 @@ scrollTopValue = 2200;
         <section class="mB__80 mobile__mB-40">
             <div class="container pos_relative  aim__video-2 no-padding">
                 <div class="playIcon__center inView customPlay replayButton mouseHover mobile__squareVideo">
+                    <?php if ( CFS()->get('video_2', $post_ID) ) : ?>
                     <video class="video-js vjs-16-9" preload="none"
                         poster="<?php echo CFS()->get('video_poster_3'  , $post_ID); ?>"
                         data-setup='{ "controls": false, "autoplay": false }' playsinline>
                         <source src="<?php echo CFS()->get('video_2', $post_ID); ?>" type="video/mp4">
                     </video>
+                    <?php elseif ( CFS()->get('video_poster_3'  , $post_ID) ) : ?>
+                    <img src="<?php echo esc_url( CFS()->get('video_poster_3'  , $post_ID) ); ?>" class="img-responsive" alt="">
+                    <?php endif; ?>
+                    <?php if ( CFS()->get('video_2', $post_ID) ) : ?>
                     <button class="o-play-btn">
                         <i class="o-play-btn__icon">
                             <div class="o-play-btn__mask"></div>
                         </i>
                     </button>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>

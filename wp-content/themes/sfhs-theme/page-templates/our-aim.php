@@ -628,16 +628,22 @@ scrollTopValue = 2200;
 
                 <!-- <div class="container pos_relative  aim__video-2 no-padding"> -->
                 <div class="playIcon__center replayButton inView customPlay mouseHover mobile__squareVideo">
+                    <?php if ( CFS()->get('section_4_video', $post_ID) ) : ?>
                     <video class="video-js vjs-16-9" preload="none"
                         poster="<?php echo CFS()->get('video_poster_2'  , $post_ID); ?>"
                         data-setup='{ "controls": false, "autoplay": false }' playsinline>
                         <source src="<?php echo CFS()->get('section_4_video', $post_ID); ?>" type="video/mp4">
                     </video>
+                    <?php elseif ( CFS()->get('video_poster_2'  , $post_ID) ) : ?>
+                    <img src="<?php echo esc_url( CFS()->get('video_poster_2'  , $post_ID) ); ?>" class="img-responsive" alt="">
+                    <?php endif; ?>
+                    <?php if ( CFS()->get('section_4_video', $post_ID) ) : ?>
                     <button class="o-play-btn">
                         <i class="o-play-btn__icon">
                             <div class="o-play-btn__mask"></div>
                         </i>
                     </button>
+                    <?php endif; ?>
                 </div>
                 <!-- </div> -->
             </div>

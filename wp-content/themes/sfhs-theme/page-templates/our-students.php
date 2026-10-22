@@ -300,16 +300,22 @@ $j = 0;
 									<div class="col-md-12 no-padding">
 											<!-- Content 3 -->
 											<div class="pos_relative img-position playIcon__left customPlay inView mobile__squareVideo">
+												<?php if ( CFS()->get('video', $post_ID) ) : ?>
 												<video class="static_video video-js vjs-16-9" preload="none" poster= "<?php echo CFS()->get('video_poster_2'  , $post_ID); ?>" data-setup='{ "controls": false, "autoplay": false }' playsinline>
 														<source src="<?php echo CFS()->get('video', $post_ID);?>" type="video/mp4" >
 												</video>
+												<?php elseif ( CFS()->get('video_poster_2'  , $post_ID) ) : ?>
+												<img src="<?php echo esc_url( CFS()->get('video_poster_2'  , $post_ID) ); ?>" class="img-responsive" alt="">
+												<?php endif; ?>
 
 												<div class="img-caption font--white" id="overlay">
+													<?php if ( CFS()->get('video', $post_ID) ) : ?>
 													<button class="o-play-btn">
 														<i class="o-play-btn__icon">
 															<div class="o-play-btn__mask"></div>
 														</i>
 													</button>
+													<?php endif; ?>
 													<p><?php echo CFS()->get('video_text', $post_ID);?></p>
 												</div>	
 											</div>

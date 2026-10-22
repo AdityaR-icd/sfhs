@@ -253,14 +253,20 @@ $j = 0;
 											<div class="col-md-4">
 												<div class="alignLeft achiever_section-formatting wayTestimonial">
 													<div class="playIcon__bottomRight customPlay inView">
+														<?php if ( $row['testimonial_video'] ) : ?>
 														<video class="video-js" preload="none" data-setup='{ "controls": false, "autoplay": false }' poster="<?php echo $row['video_thumb'];?>" playsinline>
 															<source src="<?php echo $row['testimonial_video'];?>" type="video/mp4">
 														</video>
+														<?php elseif ( $row['video_thumb'] ) : ?>
+														<img src="<?php echo esc_url( $row['video_thumb'] ); ?>" class="img-responsive" alt="">
+														<?php endif; ?>
+														<?php if ( $row['testimonial_video'] ) : ?>
 														<button class="o-play-btn">
 															<i class="o-play-btn__icon">
 																<div class="o-play-btn__mask"></div>
 															</i>
-														</button>													
+														</button>
+														<?php endif; ?>													
 
 													</div>
 													<span class="testimonialName"><?php echo $row['name'];?></span>
@@ -453,14 +459,20 @@ $j = 0;
 						<section >
 							<div class="container pos_relative  aim__video-2 no-padding">
 								<div class="playIcon__center inView customPlay replayButton mouseHover mobile__squareVideo">
+									<?php if ( CFS()->get('video', $post_ID) ) : ?>
 									<video class="video-js vjs-16-9" preload="none" poster= "<?php echo CFS()->get('video_poster_2'  , $post_ID); ?>" data-setup='{ "controls": false, "autoplay": false }' playsinline>
 										<source src="<?php echo CFS()->get('video', $post_ID); ?>" type="video/mp4">
 									</video>
+									<?php elseif ( CFS()->get('video_poster_2'  , $post_ID) ) : ?>
+									<img src="<?php echo esc_url( CFS()->get('video_poster_2'  , $post_ID) ); ?>" class="img-responsive" alt="">
+									<?php endif; ?>
+									<?php if ( CFS()->get('video', $post_ID) ) : ?>
 									<button class="o-play-btn">
 										<i class="o-play-btn__icon">
 											<div class="o-play-btn__mask"></div>
 										</i>
-									</button>	
+									</button>
+									<?php endif; ?>	
 								</div>	
 							</div>
 						</section>

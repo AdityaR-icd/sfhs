@@ -269,20 +269,26 @@ scrollTopValue = 400;
                                     <div class="pos_relative">
                                         <div class="play-btn first homeTestimonials">
                                             <div class="playIcon__bottomLeft customPlay inView">
+                                                <?php if ( $row['testimonial_video'] ) : ?>
                                                 <video class="video-js static_video" preload="none"
                                                     data-setup='{ "controls": false, "autoplay": false  }'
                                                     poster="<?php echo $row['testimonial_thumb']; ?>" playsinline>
                                                     <source src="<?php echo $row['testimonial_video']; ?>"
                                                         type="video/mp4">
                                                 </video>
+                                                <?php elseif ( $row['testimonial_thumb'] ) : ?>
+                                                <img src="<?php echo esc_url( $row['testimonial_thumb'] ); ?>" class="img-responsive" alt="">
+                                                <?php endif; ?>
                                                 <span
                                                     class="homeVideo__caption"><?php echo $row['testimonial_video_subtitle']; ?></span>
 
+                                                <?php if ( $row['testimonial_video'] ) : ?>
                                                 <button aria-label="button" role="button" class="o-play-btn">
                                                     <i class="o-play-btn__icon">
                                                         <div class="o-play-btn__mask"></div>
                                                     </i>
                                                 </button>
+                                                <?php endif; ?>
                                                 <div class="homeVideo__info">
                                                     <span class="homeCarousel__name"><?php echo $row['name']; ?></span>
                                                     <span
@@ -406,18 +412,24 @@ scrollTopValue = 400;
                     <div class="row">
                         <div class="col-md-12 no-padding">
                             <div class="pos_relative img-position playIcon__left inView customPlay mobile__squareVideo">
+                                <?php if ( CFS()->get('video', $post_ID) ) : ?>
                                 <video class="video-js vjs-16-9" preload="none"
                                     data-setup='{ "controls": false, "autoplay": false }'
                                     poster="<?php echo CFS()->get('video_thumb', $post_ID); ?>" playsinline>
                                     <source src="<?php echo CFS()->get('video', $post_ID); ?>" type="video/mp4">
                                 </video>
+                                <?php elseif ( CFS()->get('video_thumb', $post_ID) ) : ?>
+                                <img src="<?php echo esc_url( CFS()->get('video_thumb', $post_ID) ); ?>" class="img-responsive" alt="">
+                                <?php endif; ?>
 
                                 <div class="img-caption font--white" id="overlay">
+                                    <?php if ( CFS()->get('video', $post_ID) ) : ?>
                                     <button class="o-play-btn">
                                         <i class="o-play-btn__icon">
                                             <div class="o-play-btn__mask"></div>
                                         </i>
                                     </button>
+                                    <?php endif; ?>
                                     <p><?php echo CFS()->get('video_caption', $post_ID); ?></p>
                                 </div>
                             </div>
