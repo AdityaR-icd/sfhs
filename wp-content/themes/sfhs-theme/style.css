@@ -5388,22 +5388,6 @@ h3 em{
   }
 }
 
-.schoolPage .schoolGallery__band {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  margin-left: -50vw;
-  overflow: hidden;
-  padding: 30px 0;
-}
-
-.schoolPage .schoolGallery__strip img {
-  width: 100%;
-  max-height: fit-content;
-  object-fit: cover;
-  display: block;
-}
-
 /* Latest news ---------------------------------------------------------------
    The cards reuse category-news.php's markup, but `.newslist__container` is
    sized for the masonry grid on that page (23.33% wide with a 75px left

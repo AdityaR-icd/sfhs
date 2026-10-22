@@ -16,6 +16,11 @@ $school_id   = $school_tpl ? $school_tpl->ID : get_queried_object_id();
 // via their own template — this only covers the school pages.)
 $school_theme = 'redtheme';
 
+// Campus colour for the switcher only — New Chandigarh's active tab is green,
+// Chandigarh's is red (same as our-spaces). Kept on the .tabitem-wrapper, not
+// #primary: `.greentheme h1/h3` would repaint every heading on the page.
+$school_switch_theme = ($school_slug === 'sfhs-new-chandigarh') ? 'greentheme' : 'redtheme';
+
 // Campus switcher shown above the hero title. Add a campus here (plus its page
 // and matching "Templates" entry) and the nav picks it up on every school page.
 $school_campuses = [
@@ -51,7 +56,7 @@ scrollTopValue = 2200;
 
                     <!-- Campus switcher — sits directly above the heading, part of this first block -->
                     <div class="schoolfirstComponent">
-                        <div class="tabitem-wrapper">
+                        <div class="tabitem-wrapper <?php echo $school_switch_theme; ?>">
                             <?php foreach ($school_campuses as $campus_slug => $campus_label) : ?>
                             <a class="tabitem <?php echo ($school_slug === $campus_slug) ? 'activeTab' : ''; ?>"
                                 href="<?php echo esc_url(home_url('/' . $campus_slug . '/')); ?>"><?php echo $campus_label; ?></a>
@@ -168,14 +173,27 @@ scrollTopValue = 2200;
             if (empty($school_anchors[$index])) {
                 continue;
             }
-            $section_images  = !empty($section['section_images']) ? $section['section_images'] : [];
+            // CFS keys loop rows by their saved position, which doesn't always start
+            // at 0 (e.g. after a row is deleted or reordered), so re-index before
+            // anything reads `$section_images[0]`.
+            $section_images  = !empty($section['section_images']) ? array_values($section['section_images']) : [];
             $section_heading = $section_field($section, 'section_heading');
             $section_text    = $section_field($section, 'section_text');
             $column_1        = $section_field($section, 'column_1');
             $column_2        = $section_field($section, 'column_2');
             $column_3        = $section_field($section, 'column_3');
 
-            $has_content = ('' !== $section_heading || '' !== $section_text
+            // Each image can carry its own text. It only takes over the right-hand
+            // column when the section's own Section Text is empty — Section Text
+            // wins whenever it is filled in.
+            $image_texts = [];
+            foreach ($section_images as $image_row) {
+                $image_texts[] = $section_field($image_row, 'image_text');
+            }
+            $use_image_text = '' === trim(wp_strip_all_tags($section_text))
+                              && '' !== trim(wp_strip_all_tags(implode('', $image_texts)));
+
+            $has_content = ('' !== $section_heading || '' !== $section_text || $use_image_text
                             || '' !== $column_1 . $column_2 . $column_3 || $section_images);
 
             // One image is a picture, not a slider — slick only goes on when
@@ -245,7 +263,17 @@ scrollTopValue = 2200;
                             <span class="spacesLeft__angle hidden-xs hidden-sm"></span>
                             <span class="spacesBottom__angle hidden-xs hidden-sm"></span>
                             <div class="spaces__block-padding font--white redTextBlock">
+                                <?php if ($use_image_text && $is_carousel) : ?>
+                                <div class="schoolTextSlider">
+                                    <?php foreach ($image_texts as $image_text) : ?>
+                                    <div><?php echo $image_text; ?></div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php elseif ($use_image_text) : ?>
+                                <?php echo implode('', $image_texts); ?>
+                                <?php else : ?>
                                 <?php echo $section_text; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -386,7 +414,17 @@ scrollTopValue = 2200;
 
                     <div class="col-md-5">
                         <div class="content_padding-38 font--red spacesBlock__spacing anchorLink">
+                            <?php if ($use_image_text && $is_carousel) : ?>
+                            <div class="schoolTextSlider">
+                                <?php foreach ($image_texts as $image_text) : ?>
+                                <div><?php echo $image_text; ?></div>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php elseif ($use_image_text) : ?>
+                            <?php echo implode('', $image_texts); ?>
+                            <?php else : ?>
                             <?php echo $section_text; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -410,23 +448,25 @@ scrollTopValue = 2200;
 
         if ('' !== $gallery_heading && $gallery_image) :
         ?>
-        <section class="mB__120 mobile__mB-40 schoolGallery">
+        <div class="container mB__80 mobile__mB-40">
+            <div class="row">
+                <div class="col-md-7">
+                    <h2 class="head-nav sectionHeading"><?php echo $gallery_heading; ?></h2>
+                </div>
+            </div>
+        </div>
 
-            <div class="container">
+        <!--- Full width Image --->
+        <section class="mB__120 fullWidth__Image">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7">
-                        <h2 class="head-nav sectionHeading"><?php echo $gallery_heading; ?></h2>
+                    <div class="col-lg-12 no-padding d-no-padding">
+                        <img src="<?php echo $gallery_image; ?>" class="img-responsive" alt="">
                     </div>
                 </div>
             </div>
-
-            <div class="schoolGallery__band">
-                <div class="schoolGallery__strip">
-                    <img src="<?php echo $gallery_image; ?>" alt="">
-                </div>
-            </div>
-
         </section>
+        <!--- Full width Image end --->
         <?php endif; ?>
 
         <?php
@@ -525,7 +565,24 @@ jQuery(function($) {
         if (!slides) {
             return;
         }
+        // When the section shows per-image text, a second slider holds the
+        // copy and the two are slaved together so text follows the image.
+        var $text = $(this).closest('.row').find('.schoolTextSlider');
+        if ($text.length) {
+            $text.slick({
+                fade: true,
+                cssEase: 'linear',
+                speed: 400,
+                arrows: false,
+                dots: false,
+                draggable: false,
+                swipe: false,
+                adaptiveHeight: true,
+                asNavFor: this
+            });
+        }
         $(this).slick({
+            asNavFor: $text.length ? $text[0] : null,
             lazyLoad: 'anticipated',
             autoplay: true,
             autoplaySpeed: 4000,

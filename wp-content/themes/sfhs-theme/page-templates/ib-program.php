@@ -218,6 +218,7 @@ get_header();
 				} // end foreach
 			?>
 			
+			 <?php if ( CFS()->get('video') ) : ?>
 			 <!-- Video Section -->
 			 <section class="mB__80">
                 <div class="container">
@@ -242,6 +243,7 @@ get_header();
                 </div>
             </section>
             <!-- Video Section End-->
+			<?php endif; ?>
 
 			<?php 
 				$twoColWidget = CFS()->get('two_col_text');
