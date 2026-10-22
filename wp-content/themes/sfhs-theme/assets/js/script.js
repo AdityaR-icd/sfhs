@@ -167,6 +167,10 @@ $(document).ready(function () {
       pauseOnHover: true,
       asNavFor: ".academic__textSlide",
       dots: true,
+      // Under the red block rather than offset from the slider: the block's
+      // height changes with the copy and the screen width, so a fixed offset
+      // lands the dots on top of the text on phones.
+      appendDots: $(".academic__dots"),
       draggable: false,
     });
     $(".academic__textSlide").slick({

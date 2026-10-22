@@ -4619,20 +4619,63 @@ line-height: 50px;
 	Home – Academic Programmes (scoped to this section)
 ====================================================*/
 
-/* Dots: centered and moved down below the red block */
-.home__academicSection .slick-dots {
-  bottom: -290px;
+/* Dots: centered below the red block. script.js appends them to their own
+   container after the block, so they flow under it at any block height —
+   `static` retires slick's absolute positioning. */
+.home__academicSection .academic__dots .slick-dots {
+  position: static;
+  margin-top: 40px;
   padding-left: 0;
   text-align: center;
 }
 
+/* Tablet: the block keeps its desktop absolute, fixed-height box down to 769px,
+   but the copy is already too long for 350px there and spills out of the red.
+   Stack it under the image the way phones do (the max-width: 768px
+   `.way__footer-blockRed` rules) so it grows with its text. Two classes to
+   outrank `.educators__wayBlock` in the 767–1200 range. */
+@media (max-width: 991px) {
+  /* The 52px top padding offsets the overlapping desktop block; stacked it
+     only opens a gap between the photo and the red. */
+  .home__academicSection .way__footer {
+    top: 0;
+    padding-top: 0;
+  }
+  .home__academicSection .way__footer-blockRed {
+    position: relative;
+    width: 100%;
+    height: auto;
+    right: 0;
+    top: 0;
+    padding: 0;
+  }
+}
+
+/* Desktop: the red block is absolutely positioned at a fixed height, so it
+   takes no room in the flow and would cover dots that follow it. Pin them
+   below the block instead — the same spot the old -290px offset gave. */
+@media only screen and (min-width: 992px) {
+  .home__academicSection {
+    position: relative;
+  }
+  .home__academicSection .academic__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -216px;
+  }
+  .home__academicSection .academic__dots .slick-dots {
+    margin-top: 0;
+  }
+}
+
 /* Inactive dots: grey; Active dot: red */
-.home__academicSection .redBlockCarousel .slick-dots li button:before {
+.home__academicSection .academic__dots .slick-dots li button:before {
   color: #9b9b9b !important;
   opacity: 1;
 }
 
-.home__academicSection .redBlockCarousel .slick-dots li.slick-active button:before {
+.home__academicSection .academic__dots .slick-dots li.slick-active button:before {
   color: #d0021b !important;
   opacity: 1;
 }
@@ -5293,6 +5336,23 @@ h3 em{
 }
 .schoolPage .schoolSection--parallax .slick-dots {
   bottom: -50px;
+}
+/* Stacked, the red block sits straight under the image, so dots hung below it
+   land on the block's heading. Keep them inside the photo instead, in white
+   like the other dots that sit over imagery. */
+@media (max-width: 991px) {
+  .schoolPage .schoolSection--parallax .slick-dots {
+    bottom: 12px;
+    padding-left: 0;
+  }
+  .schoolPage .schoolSection--parallax .slick-dots li button:before {
+    color: #ffffff;
+    opacity: 0.56;
+  }
+  .schoolPage .schoolSection--parallax .slick-dots li.slick-active button:before {
+    color: #ffffff;
+    opacity: 1;
+  }
 }
 
 /* The column and panel blocks each show a single full-width photo, so let it
@@ -10206,11 +10266,32 @@ letter-spacing: -0.3px;
   height: auto;
 }
 
+/* Stacked below lg, so the heading and intro are no longer side by side and the
+   72px indent that lines the artwork up with the intro column only pushes it
+   off the right edge. */
+@media (max-width: 991px) {
+  .journey .journey__heading {
+    font-size: 40px;
+    line-height: 44px;
+    margin-bottom: 25px;
+  }
+
+  .journey__image {
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 767px) {
   .journey .journey__heading {
     font-size: 30px;
     line-height: 32px;
     letter-spacing: -0.35px;
+    margin-bottom: 20px;
+  }
+
+  .journey__intro {
+    font-size: 15px;
+    line-height: 24px;
   }
 
   .journey__image {
@@ -10290,8 +10371,16 @@ letter-spacing: -0.3px;
   font-weight: 700;
 }
 
+@media (max-width: 991px) {
+  .comparison .comparison__heading {
+    font-size: 40px;
+    line-height: 44px;
+  }
+}
+
 @media (max-width: 767px) {
   .comparison .comparison__heading {
+    margin-bottom: 25px;
     font-size: 30px;
     line-height: 32px;
     letter-spacing: -0.35px;
@@ -10411,12 +10500,45 @@ text-transform: uppercase;
 /* Stacked on one column the heading no longer needs the tall gap that pushes the
    copy down beside the list. */
 @media (max-width: 991px) {
+  /* 35/37 is the step-down the theme already uses for its Playfair statement
+     headings (`.aim__Heading-P` on Our Aim). */
   .features .features__heading {
+    font-size: 35px;
+    line-height: 37px;
+    max-width: none;
     margin-bottom: 30px;
   }
 
+  /* The list's wrapper is not a bootstrap column, so stacked it has no gutter
+     and runs flush to the screen edge. Give it the column padding back, and
+     drop the desktop measure and right margin that only made sense beside
+     the copy. */
   .features__list {
-    margin-top: 50px;
+    max-width: none;
+    margin: 50px 0 0;
+    padding: 0 15px;
+  }
+
+  .features__text {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .features .features__heading {
+    font-size: 30px;
+    line-height: 34px;
+  }
+
+  .features__text,
+  .features__list li {
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .features__list li::before {
+    font-size: 40px;
+    line-height: 44px;
   }
 }
 
@@ -10512,8 +10634,22 @@ max-width: 450px;
     margin-bottom: 40px;
   }
 
+  /* Even rows put the copy first in the markup so it sits left on desktop.
+     Stacked, that leaves the image under its copy on alternate rows — pull the
+     image back to the top so every programme reads image, title, text. */
   .dive__row {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 60px;
+  }
+
+  .dive__row::before,
+  .dive__row::after {
+    content: none;
+  }
+
+  .dive__row .dive__mediaCol {
+    order: -1;
   }
 
   .dive .dive__media {
@@ -10670,6 +10806,12 @@ letter-spacing: -0.486px;
     font-size: 40px;
     line-height: 44px;
   }
+
+  /* The 100px right gutter is there to keep the answer short of the cut on a
+     wide bar; on a narrower one it just squeezes the copy. */
+  .faqs__answer-inner {
+    padding-right: 30px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -10796,7 +10938,7 @@ letter-spacing: -0.486px;
    asset, say) is uploaded — it holds the intended size instead of stretching
    the row. The max-width keeps it shrinking normally on narrow screens. */
 .cisContent .rightImage img {
-  max-width: 435px;
+  max-width: min(435px, 100%);
 }
 
 @media (max-width: 991px) {
@@ -10919,14 +11061,45 @@ letter-spacing: -0.486px;
   background-color: #ffffff;
 }
 
-@media only screen and (max-width: 768px) {
-  /* Mobile drops the overlap and the shape entirely, as Our Aim's does. */
+/* Below desktop the copy is taller than the strip of photo it would sit on, so
+   the absolutely placed block spills over the image and into the footer. Put
+   it back in the flow under the image and drop the white shape, which is what
+   Our Aim's footer does on mobile. Starts at 991 rather than Our Aim's 768
+   because this block is absolutely positioned and has no room to grow. */
+@media (max-width: 991px) {
   .our__commitment-footer {
+    position: static !important;
+    transform: none;
+    width: auto;
+    max-width: none;
     margin-top: 0;
   }
 
   .our__commitment-footer::before {
     height: 0;
+  }
+
+  .cisCommitment .aim__Heading-P {
+    font-size: 30px;
+    line-height: 38px;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* The whole closing statement is set in the heading face here, so the 35px
+     Our Aim uses for its one-line lead is too big for a paragraph. */
+  .cisCommitment .aim__Heading-P {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+@media only screen and (max-width: 539px) {
+  /* Matching `.head-nav`'s smallest step. */
+  .templatePage .cisHeading {
+    font-size: 36px;
+    line-height: 38px;
   }
 }
 

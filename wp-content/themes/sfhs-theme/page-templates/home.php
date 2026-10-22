@@ -465,6 +465,7 @@ scrollTopValue = 400;
                         </div>
                     </div>
                 </div>
+                <div class="academic__dots"></div>
             </section>
             <!-- End Section 2 -->
 

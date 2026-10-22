@@ -348,7 +348,7 @@ get_header();
                         $imageLeft = ( $d % 2 !== 0 );
                         ob_start();
                 ?>
-                <div class="col-lg-7 col-lg-offset-1 <?php echo $imageLeft ? '' : ''; ?> templateContent__center">
+                <div class="col-lg-7 col-lg-offset-1 dive__mediaCol templateContent__center">
                     <span class="<?php echo $imageLeft ? 'leftImage' : 'rightImage'; ?> dive__media">
                         <img src="<?php echo esc_url( $programme['programme_image'] ); ?>" class="img-responsive"
                             alt="<?php echo esc_attr( $programme['programme_title'] ); ?>">
